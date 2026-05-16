@@ -1,0 +1,24 @@
+# =====================================================================
+# .gitignore  -  lista de arquivos/pastas que o Git deve IGNORAR
+# (nao rastrear, nunca enviar para o GitHub)
+# =====================================================================
+
+# ---- Arquivos de build do C# / .NET ----
+# Sao gerados automaticamente ao compilar. Nao faz sentido versionar.
+bin/
+obj/
+*.user
+
+# ---- CONFIGURACOES SENSIVEIS - NUNCA versionar (contem senhas) ----
+# O .env real (com a senha de verdade) fica so na maquina de cada um.
+.env
+# appsettings com dados locais (caso a dupla use este padrao no C#).
+appsettings.Development.json
+
+# ---- Arquivos da IDE / sistema operacional ----
+# Lixo que o Visual Studio / VS Code / Windows criam. Nao interessa.
+.vs/
+.vscode/
+*.suo
+Thumbs.db
+.DS_Store
