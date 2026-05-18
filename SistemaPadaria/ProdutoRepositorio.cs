@@ -12,7 +12,7 @@ namespace SistemaPadaria
     {
         Conexao conexao = new Conexao();
 
-        public void AdicionarProduto(Produto produto)
+        public long AdicionarProduto(Produto produto)
         {
             // Chama o metodo que retorna a conexão 
             MySqlConnection conn = conexao.GetConexao();
@@ -28,31 +28,24 @@ namespace SistemaPadaria
             cmd.Parameters.AddWithValue("@tipo", produto.Tipo);
             cmd.ExecuteNonQuery();
 
+            long idGerado = cmd.LastInsertedId;
             conn.Close();
+
+            return idGerado;
         }
 
         public void AdicionarProdutoPerecivel(ProdutoPerecivel produtoPerecivel)
         {
+            long idGerado = AdicionarProduto(produtoPerecivel); 
+
             MySqlConnection conn = conexao.GetConexao();
             conn.Open();
-
-            string sql = "INSERT INTO produto (nome, preco, quantidade_estoque, tipo) VALUES (@nome, @preco, @quantidade, @tipo)";
+            string sql = "INSERT INTO produto_perecivel (id, data_validade, refrigerado) VALUES (@idGerado, @data, @refrigerado)";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@nome", produtoPerecivel.Nome);
-            cmd.Parameters.AddWithValue("@preco", produtoPerecivel.Preco);
-            cmd.Parameters.AddWithValue("@quantidade", produtoPerecivel.QuantidadeEstoque);
-            cmd.Parameters.AddWithValue("@tipo", produtoPerecivel.Tipo);
+            cmd.Parameters.AddWithValue("@idGerado", idGerado);
+            cmd.Parameters.AddWithValue("@data", produtoPerecivel.DataValidade);
+            cmd.Parameters.AddWithValue("@refrigerado", produtoPerecivel.Refrigerado);
             cmd.ExecuteNonQuery();
-
-            long idGerado = cmd.LastInsertedId;
-            
-            sql = "INSERT INTO produto_perecivel (id, data_validade, refrigerado) VALUES (@idGerado, @data,@refrigerado)";
-            MySqlCommand cmd2 = new MySqlCommand(sql, conn);           
-            cmd2.Parameters.AddWithValue("idGerado", idGerado);
-            cmd2.Parameters.AddWithValue("@data", produtoPerecivel.DataValidade);
-            cmd2.Parameters.AddWithValue("@refrigerado", produtoPerecivel.Refrigerado);
-            cmd2.ExecuteNonQuery();
-
             conn.Close();
 
         }
