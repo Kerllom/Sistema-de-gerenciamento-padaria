@@ -35,6 +35,9 @@ namespace SistemaPadaria
             ProdutoRep.AtualizarProduto(produtoAtualizado);
             Console.WriteLine("Produto Atualizado!");
 
+            Console.WriteLine("\nPRESSIONE 'ENTER' PARA CONTINUAR...");
+            Console.ReadLine();
+
         }
     }
 }

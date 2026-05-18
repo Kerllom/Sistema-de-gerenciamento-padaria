@@ -62,6 +62,9 @@ namespace SistemaPadaria
             ProdutoRep.AdicionarProdutoPerecivel(perecivel);
             Console.WriteLine("Produto adicionado com sucesso!");
 
+            Console.WriteLine("\nPRESSIONE 'ENTER' PARA CONTINUAR...");
+            Console.ReadLine();
+
         }
 
         public void Industrializados()
@@ -89,6 +92,9 @@ namespace SistemaPadaria
 
             ProdutoRep.AdicionarProdutoIndustrializado(industrializado);
             Console.WriteLine("Produto adicionado com sucesso!");
+
+            Console.WriteLine("\nPRESSIONE 'ENTER' PARA CONTINUAR...");
+            Console.ReadLine();
 
         }
     }

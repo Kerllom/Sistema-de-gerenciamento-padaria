@@ -27,6 +27,7 @@ while (true)
 
             case 1:
                 Menu.Main();
+                
                 break;
 
             case 2:
@@ -35,6 +36,10 @@ while (true)
             {
                 Console.WriteLine($"ID: {p.Id} | Nome: {p.Nome} | Preco: {p.Preco} | Tipo: {p.Tipo}");
             }
+
+            Console.WriteLine("\nPRESSIONE 'ENTER' PARA CONTINUAR...");
+            Console.ReadLine();
+
             break;
 
         case 3:
@@ -46,6 +51,10 @@ while (true)
             int Id = int.Parse(Console.ReadLine());
             ProdutoRep.ExcluirProduto(Id);
             Console.WriteLine("Produto excluído!");
+
+            Console.WriteLine("\nPRESSIONE 'ENTER' PARA CONTINUAR...");
+            Console.ReadLine();
+
             break;
 
     }
