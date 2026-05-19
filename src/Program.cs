@@ -3,11 +3,11 @@ using PadariaApp.Models;
 using PadariaApp.Repositories;
 
 // =====================================================================
-// PROGRAM.CS TEMPORARIO - so para testar os repositorios de Produto.
+// PROGRAM.CS TEMPORARIO - testa os repositorios de Usuario.
 // O menu interativo de verdade vem na Etapa 5.
 // =====================================================================
 
-Console.WriteLine("=== TESTE DOS REPOSITORIOS DE PRODUTO ===");
+Console.WriteLine("=== TESTE DOS REPOSITORIOS DE USUARIO ===");
 Console.WriteLine();
 
 if (!DatabaseConnection.TestarConexao())
@@ -16,68 +16,75 @@ if (!DatabaseConnection.TestarConexao())
     return;
 }
 
-var repoPerecivel = new ProdutoPerecivelRepository();
-var repoIndustrializado = new ProdutoIndustrializadoRepository();
+var repoCliente = new ClienteRepository();
+var repoFuncionario = new FuncionarioRepository();
 
 // ---------- CREATE ----------
 Console.WriteLine("--- CREATE ---");
-var bolo = new ProdutoPerecivel(
-    nome: "Bolo de Cenoura",
-    preco: 25.00m,
-    quantidadeEstoque: 5,
-    dataValidade: DateTime.Today.AddDays(3),
-    refrigerado: false);
-var idBolo = repoPerecivel.Inserir(bolo);
-Console.WriteLine($"Inseriu perecivel com id {idBolo}");
+var cliente = new Cliente(
+    nome: "Ana Silva",
+    email: "ana@email.com",
+    login: "ana.silva",
+    senha: "senha123",
+    dataCadastro: DateTime.Today,
+    pontosFidelidade: 0);
+var idCliente = repoCliente.Inserir(cliente);
+Console.WriteLine($"Inseriu cliente com id {idCliente}");
 
-var suco = new ProdutoIndustrializado(
-    nome: "Suco de Laranja 1L",
-    preco: 12.50m,
-    quantidadeEstoque: 30,
-    marca: "Del Vale",
-    codigoBarras: "7891234500001");
-var idSuco = repoIndustrializado.Inserir(suco);
-Console.WriteLine($"Inseriu industrializado com id {idSuco}");
+var funcionario = new Funcionario(
+    nome: "Carlos Souza",
+    email: "carlos@email.com",
+    login: "carlos.souza",
+    senha: "senha456",
+    cargo: "Atendente",
+    salario: 2200.00m,
+    dataAdmissao: DateTime.Today);
+var idFuncionario = repoFuncionario.Inserir(funcionario);
+Console.WriteLine($"Inseriu funcionario com id {idFuncionario}");
 Console.WriteLine();
 
-// ---------- READ (todos) ----------
-Console.WriteLine("--- READ (todos os pereciveis) ---");
-foreach (var p in repoPerecivel.ListarTodos())
+// ---------- READ ----------
+Console.WriteLine("--- READ (todos os clientes) ---");
+foreach (var c in repoCliente.ListarTodos())
 {
-    // Aqui acontece o POLIMORFISMO: chama DescricaoCompleta() na
-    // referencia de Produto, mas roda a versao de ProdutoPerecivel.
-    Console.WriteLine(p.DescricaoCompleta());
+    // POLIMORFISMO: ExibirPerfil() de Cliente roda a versao especifica.
+    Console.WriteLine(c.ExibirPerfil());
 }
 Console.WriteLine();
 
-Console.WriteLine("--- READ (todos os industrializados) ---");
-foreach (var p in repoIndustrializado.ListarTodos())
+Console.WriteLine("--- READ (todos os funcionarios) ---");
+foreach (var f in repoFuncionario.ListarTodos())
 {
-    Console.WriteLine(p.DescricaoCompleta());
+    Console.WriteLine(f.ExibirPerfil());
 }
 Console.WriteLine();
 
 // ---------- UPDATE ----------
 Console.WriteLine("--- UPDATE ---");
-var boloParaAtualizar = repoPerecivel.BuscarPorId(idBolo);
-if (boloParaAtualizar != null)
+var clienteParaAtualizar = repoCliente.BuscarPorId(idCliente);
+if (clienteParaAtualizar != null)
 {
-    boloParaAtualizar.Preco = 28.00m;
-    boloParaAtualizar.QuantidadeEstoque = 10;
-    repoPerecivel.Atualizar(boloParaAtualizar);
-    Console.WriteLine($"Atualizou bolo. Novo estado:");
-    Console.WriteLine(repoPerecivel.BuscarPorId(idBolo)!.DescricaoCompleta());
+    clienteParaAtualizar.PontosFidelidade = 50;
+    repoCliente.Atualizar(clienteParaAtualizar);
+    Console.WriteLine($"Atualizou cliente. Novo estado:");
+    Console.WriteLine(repoCliente.BuscarPorId(idCliente)!.ExibirPerfil());
 }
+Console.WriteLine();
+
+// ---------- BUSCA POR LOGIN (util para login no menu) ----------
+Console.WriteLine("--- BUSCA POR LOGIN ---");
+var funcEncontrado = repoFuncionario.BuscarPorLogin("carlos.souza");
+Console.WriteLine($"Busca por 'carlos.souza': {(funcEncontrado != null ? funcEncontrado.ExibirPerfil() : "nao encontrado")}");
 Console.WriteLine();
 
 // ---------- DELETE ----------
 Console.WriteLine("--- DELETE ---");
-repoPerecivel.Deletar(idBolo);
-repoIndustrializado.Deletar(idSuco);
-Console.WriteLine($"Deletou perecivel id {idBolo} e industrializado id {idSuco}");
+repoCliente.Deletar(idCliente);
+repoFuncionario.Deletar(idFuncionario);
+Console.WriteLine($"Deletou cliente id {idCliente} e funcionario id {idFuncionario}");
 
-var conferir = repoPerecivel.BuscarPorId(idBolo);
-Console.WriteLine($"Buscar bolo deletado retornou: {(conferir == null ? "null (correto)" : "ainda existe!")}");
+var conferir = repoCliente.BuscarPorId(idCliente);
+Console.WriteLine($"Buscar cliente deletado retornou: {(conferir == null ? "null (correto)" : "ainda existe!")}");
 
 Console.WriteLine();
 Console.WriteLine("=== TESTE CONCLUIDO ===");
