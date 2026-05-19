@@ -27,13 +27,8 @@ public static class MenuPrincipal
             {
                 case "1": MenuProdutoPerecivel.Exibir(); break;
                 case "2": MenuProdutoIndustrializado.Exibir(); break;
-                // Os menus de Cliente e Funcionario virao no sub-bloco 5B.
-                case "3":
-                case "4":
-                    Console.WriteLine("(Em breve - sera implementado no proximo passo)");
-                    Console.WriteLine("Pressione qualquer tecla...");
-                    Console.ReadKey();
-                    break;
+                case "3": MenuCliente.Exibir(); break;
+                case "4": MenuFuncionario.Exibir(); break;
                 case "0":
                     Console.WriteLine("Encerrando o sistema. Ate logo!");
                     return;
