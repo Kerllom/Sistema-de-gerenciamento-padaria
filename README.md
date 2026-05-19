@@ -176,9 +176,3 @@ A classe `DatabaseConnection` é o ponto único onde as credenciais e a string d
 ### Menus em arquivos separados
 
 A camada de apresentação foi quebrada em cinco arquivos (um por entidade + um menu raiz) seguindo o mesmo princípio de separação aplicado nos repositórios. Cada menu tem responsabilidade única e fica fácil de manter.
-
----
-
-## Autor
-
-**Kerllom Luis** — projeto desenvolvido como atividade prática da disciplina de Programação de Aplicativos no SENAI.
